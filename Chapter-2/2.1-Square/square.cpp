@@ -5,25 +5,18 @@
 void drawScene(void) {
   glClear(GL_COLOR_BUFFER_BIT);
 
-  // Draw a polygon with specified vertices.
   glColor3f(1.0, 0.0, 0.0);
-  glLineWidth(20);
-  glBegin(GL_LINE_LOOP);
-  glVertex3f(20.0, 20.0, 0.0);
-  glVertex3f(80.0, 20.0, 0.0);
-  glVertex3f(80.0, 80.0, 0.0);
-  glVertex3f(20.0, 80.0, 0.0);
-  glEnd();
 
-  glBegin(GL_POLYGON);
-  glColor3f(1.0, 0.0, 0.0);
-  glVertex3f(120.0, 120.0, 0.0);
-  glColor3f(0.0, 1.0, 0.0);
-  glVertex3f(120.0, 180.0, 0.0);
-  glColor3f(0.0, 0.0, 1.0);
-  glVertex3f(180.0, 180.0, 0.0);
-  glColor3f(1.0, 1.0, 0.0);
-  glVertex3f(180.0, 120.0, 0.0);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glBegin(GL_TRIANGLE_STRIP);
+  glVertex3f(80.0, 80.0, 0.0);
+  glVertex3f(60.0, 70.0, 0.0);
+  glVertex3f(20.0, 80.0, 0.0);
+  glVertex3f(30.0, 70.0, 0.0);
+  glVertex3f(20.0, 20.0, 0.0);
+  glVertex3f(30.0, 30.0, 0.0);
+  glVertex3f(80.0, 20.0, 0.0);
+  glVertex3f(60.0, 30.0, 0.0);
   glEnd();
 
   glFlush();
@@ -40,7 +33,7 @@ void resize(int w, int h) {
   glLoadIdentity();
   // Set up virtual viewerbox where the programmer can draw scenes
   // --glOrtho(Left, Right, Bottom, Top, Near, Far)
-  glOrtho(0.0, 200.0, 0.0, 200.0, -1.0, 1.0);
+  glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
