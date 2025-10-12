@@ -15,6 +15,13 @@ void drawScene(void) {
   glVertex3f(20.0, 80.0, 0.0);
   glEnd();
 
+  glBegin(GL_POLYGON);
+  glVertex3f(120.0, 120.0, 0.0);
+  glVertex3f(120.0, 180.0, 0.0);
+  glVertex3f(180.0, 180.0, 0.0);
+  glVertex3f(180.0, 120.0, 0.0);
+  glEnd();
+
   glFlush();
 }
 
@@ -29,7 +36,7 @@ void resize(int w, int h) {
   glLoadIdentity();
   // Set up virtual viewerbox where the programmer can draw scenes
   // --glOrtho(Left, Right, Bottom, Top, Near, Far)
-  glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
+  glOrtho(0.0, 200.0, 0.0, 200.0, -1.0, 1.0);
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
