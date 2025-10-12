@@ -14,3 +14,13 @@
 -GL_LINES: draws a disconnected sequence of straight line segments between the vertices, taken two at a time.
 -GL_LINE_STRIP: draws the connected sequence of segments
 -GL_LINE_LOOP: same as line strip but drawn to complete a loop
+-GL_TRIANGLES: draws a sequence of triangles using the vertices three at a time. (if n is not a multiple of 3, last one or two vertices are ignored)
+-GL_TRIANGLE_STRIP: draws a sequence of triangles as a sliding window picking the vertices of triangles in a strip
+-GL_TRIANGLE_FAN: draws a sequence of triangles around the first vertex as follows: v0v1v2, v0v2v3, v0vn-2vn-1
+
+**standalone call**
+-glRectf(x1,y1,x2,y2): draws a rectangle with a list of vertices: [(x1,y1,0), (x2,y1,0), (x1,y2,0), (x2,y2,0)]
+
+**glPolygonMode(face, mode):**
+-face: GL_FRONT / GL_BACK / GL_FRONT_AND_BACK
+-mode: GL_FILL / GL_LINE / GL_POINT
