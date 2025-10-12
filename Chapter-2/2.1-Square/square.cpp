@@ -27,6 +27,8 @@ void resize(int w, int h) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
+  // Set up virtual viewerbox where the programmer can draw scenes
+  // --glOrtho(Left, Right, Bottom, Top, Near, Far)
   glOrtho(0.0, 100.0, 0.0, 100.0, -1.0, 1.0);
 
   glMatrixMode(GL_MODELVIEW);
