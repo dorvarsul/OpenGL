@@ -8,15 +8,13 @@ void drawScene(void) {
   glColor3f(1.0, 0.0, 0.0);
 
   glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  glBegin(GL_TRIANGLE_STRIP);
-  glVertex3f(80.0, 80.0, 0.0);
-  glVertex3f(60.0, 70.0, 0.0);
-  glVertex3f(20.0, 80.0, 0.0);
-  glVertex3f(30.0, 70.0, 0.0);
-  glVertex3f(20.0, 20.0, 0.0);
-  glVertex3f(30.0, 30.0, 0.0);
-  glVertex3f(80.0, 20.0, 0.0);
-  glVertex3f(60.0, 30.0, 0.0);
+  glBegin(GL_TRIANGLE_FAN);
+  glVertex3f(10.0, 10.0, 0.0);
+  glVertex3f(15.0, 90.0, 0.0);
+  glVertex3f(55.0, 75.0, 0.0);
+  glVertex3f(80.0, 30.0, 0.0);
+  glVertex3f(90.0, 10.0, 0.0);
+
   glEnd();
 
   glFlush();
