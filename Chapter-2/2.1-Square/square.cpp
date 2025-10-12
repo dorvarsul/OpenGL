@@ -7,7 +7,8 @@ void drawScene(void) {
 
   // Draw a polygon with specified vertices.
   glColor3f(1.0, 0.0, 0.0);
-  glBegin(GL_POLYGON);
+  glLineWidth(20);
+  glBegin(GL_LINE_LOOP);
   glVertex3f(20.0, 20.0, 0.0);
   glVertex3f(80.0, 20.0, 0.0);
   glVertex3f(80.0, 80.0, 0.0);
