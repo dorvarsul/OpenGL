@@ -24,3 +24,8 @@
 **glPolygonMode(face, mode):**
 -face: GL_FRONT / GL_BACK / GL_FRONT_AND_BACK
 -mode: GL_FILL / GL_LINE / GL_POINT
+
+**Syntax of hidden surface removal:**
+-glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) causes the depth buffer to be cleared
+-glEnable(GL_DEPTH_TEST) turns hidden surface removal on. glDisable(...) turns it off.
+-glutInitDisplayMode(GLUT SINGLE | GLUT RGB | GLUT DEPTH) causes the depth buffer to be initialized
