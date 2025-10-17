@@ -13,6 +13,7 @@ void processInput(GLFWwindow *window);
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+float visibility = 0.2;
 
 int main() {
   // glfw: initialize and configure
@@ -129,19 +130,23 @@ int main() {
   ourShader.use();
   ourShader.setInt("texture1", 0);
   ourShader.setInt("texture2", 1);
-
+  ourShader.setFloat("visibility", visibility);
   // render loop
   // -----------
   while (!glfwWindowShouldClose(window)) {
     // input
     // -----
     processInput(window);
-
     // render
     // ------
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    if (visibility < 0)
+      visibility = 0;
+    if (visibility > 1)
+      visibility = 1;
+    ourShader.setFloat("visibility", visibility);
     // bind Texture
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
@@ -177,6 +182,10 @@ int main() {
 void processInput(GLFWwindow *window) {
   if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
     glfwSetWindowShouldClose(window, true);
+  if (glfwGetKey(window, GLFW_KEY_KP_ADD) == GLFW_PRESS)
+    visibility += 0.01;
+  if (glfwGetKey(window, GLFW_KEY_KP_SUBTRACT) == GLFW_PRESS)
+    visibility -= 0.01;
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback
