@@ -22,10 +22,6 @@ int main() {
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-#ifdef __APPLE__
-  glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-#endif
-
   // glfw window creation
   // --------------------
   GLFWwindow *window =
@@ -91,11 +87,9 @@ int main() {
   // load and create a texture
   // -------------------------
   unsigned int texture;
+  unsigned int texture2;
   glGenTextures(1, &texture);
-  glBindTexture(GL_TEXTURE_2D,
-                texture); // all upcoming GL_TEXTURE_2D operations now have
-                          // effect on this texture object
-  // set the texture wrapping parameters
+  glBindTexture(GL_TEXTURE_2D, texture);
   glTexParameteri(
       GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
       GL_REPEAT); // set texture wrapping to GL_REPEAT (default wrapping method)
@@ -106,8 +100,8 @@ int main() {
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   // load image, create texture and generate mipmaps
   int width, height, nrChannels;
-  // The FileSystem::getPath(...) is part of the GitHub repository so we can
-  // find files on any IDE/platform; replace it with your own image path.
+  int width2, height2, nrChannels2;
+  stbi_set_flip_vertically_on_load(true);
   unsigned char *data =
       stbi_load("./container.jpg", &width, &height, &nrChannels, 0);
   if (data) {
@@ -118,6 +112,23 @@ int main() {
     std::cout << "Failed to load texture" << std::endl;
   }
   stbi_image_free(data);
+  glGenTextures(1, &texture2);
+  glBindTexture(GL_TEXTURE_2D, texture2);
+  unsigned char *data2 =
+      stbi_load("./awesomeface.png", &width2, &height2, &nrChannels2, 0);
+  if (data2) {
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width2, height2, 0, GL_RGBA,
+                 GL_UNSIGNED_BYTE, data2);
+    glGenerateMipmap(GL_TEXTURE_2D);
+  } else {
+    std::cout << "Failed to load 2nd texture" << std::endl;
+  }
+  stbi_image_free(data2);
+
+  // render container
+  ourShader.use();
+  ourShader.setInt("texture1", 0);
+  ourShader.setInt("texture2", 1);
 
   // render loop
   // -----------
@@ -132,9 +143,11 @@ int main() {
     glClear(GL_COLOR_BUFFER_BIT);
 
     // bind Texture
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, texture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, texture2);
 
-    // render container
     ourShader.use();
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -170,7 +183,5 @@ void processInput(GLFWwindow *window) {
 // function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-  // make sure the viewport matches the new window dimensions; note that width
-  // and height will be significantly larger than specified on retina displays.
   glViewport(0, 0, width, height);
 }
